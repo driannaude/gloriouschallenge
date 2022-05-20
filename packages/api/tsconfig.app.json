@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "module": "commonjs",
+    "types": ["node"],
+    "emitDecoratorMetadata": true,
+    "target": "es2015",
+    "paths": {
+      "@polkadot/types": [
+        "./node_modules/@cennznet/types/interfaces/augment-api.d.ts"
+      ],
+      "@polkadot/types/augment": [
+        "./node_modules/@cennznet/types/interfaces/augment-types.d.ts"
+      ]
+    }
+  },
+  "exclude": ["jest.config.ts", "**/*.spec.ts", "**/*.test.ts"],
+  "include": ["**/*.ts"]
+}

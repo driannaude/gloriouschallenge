@@ -1,0 +1,21 @@
+{
+  "extends": "nx/presets/core.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "glorious-challenge",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/nest"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "MmMyNTM3MmMtMjk5Yy00NjViLTkwNjMtN2Q3ZjMzNmNiOGNjfHJlYWQtd3JpdGU="
+      }
+    }
+  },
+  "defaultProject": "api"
+}
