@@ -3,5 +3,6 @@ import { CennzNetService } from './cennznet.service';
 
 @Module({
   providers: [CennzNetService],
+  exports: [CennzNetService],
 })
 export class CennzNetModule {}

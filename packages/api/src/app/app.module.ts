@@ -3,7 +3,7 @@ import { CennzNetModule } from '../cennznet/cennznet.module';
 import { ChainModule } from '../chain/chain.module';
 
 @Module({
-  imports: [ChainModule, CennzNetModule],
+  imports: [CennzNetModule, ChainModule],
   controllers: [],
   providers: [],
 })
