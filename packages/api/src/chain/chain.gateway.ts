@@ -6,16 +6,16 @@ import {
   SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
-import { Socket } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway()
-export class AppGateway
+@WebSocketGateway(8080)
+export class ChainGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  private logger: Logger = new Logger('WebsocketGateway');
+  private logger: Logger = new Logger(ChainGateway.name);
 
-  afterInit(server: any) {
-    this.logger.debug('Websocket gateway initialized');
+  afterInit(server: Server) {
+    this.logger.debug(`${ChainGateway.name} initialized on port 8080`);
   }
 
   handleConnection(client: Socket, ...args: any[]) {

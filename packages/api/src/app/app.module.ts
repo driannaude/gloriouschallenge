@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppGateway } from '../app.gateway';
 import { CennzNetModule } from '../cennznet/cennznet.module';
+import { ChainModule } from '../chain/chain.module';
 
 @Module({
-  imports: [CennzNetModule],
+  imports: [ChainModule, CennzNetModule],
   controllers: [],
-  providers: [AppGateway],
+  providers: [],
 })
 export class AppModule {}
