@@ -6,12 +6,14 @@ export const HomePage: React.FC = () => {
     isConnected,
     data: blockNumber,
     emit,
-  } = useWebSockets<number>('update:block_number');
+  } = useWebSockets<number>('update:block_number', {
+    onConnect: () => console.log('connected'),
+  });
 
   return (
-    <div>
+    <>
       <div>Block Number:</div>
       <div>{blockNumber}</div>
-    </div>
+    </>
   );
 };

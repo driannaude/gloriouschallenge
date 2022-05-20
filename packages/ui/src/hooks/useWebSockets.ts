@@ -22,7 +22,6 @@ export const useWebSockets = <WebSocketDataType>(
   const [isConnected, setIsConnected] = useState(false);
   const [data, setData] = useState<WebSocketDataType | null>(null);
   useEffect(() => {
-    console.log('bootstrapping useWebSockets');
     ws.on('connect', () => {
       setIsConnected(true);
       config?.onConnect?.();

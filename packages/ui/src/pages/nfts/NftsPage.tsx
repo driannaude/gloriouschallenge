@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const NftsPage: React.FC = () => {
+export const NftsPage = () => {
   return <div>NftsPage</div>;
 };
