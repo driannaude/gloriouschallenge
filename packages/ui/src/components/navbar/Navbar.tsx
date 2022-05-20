@@ -9,8 +9,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import './Navbar.scss';
+import { WallectConnectButton } from './WallectConnectButton';
 
 const NavbarComponent = () => {
+  // State
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Memoized Values
@@ -40,6 +42,7 @@ const NavbarComponent = () => {
             <FontAwesomeIcon icon={faCrown} />
             NFTs
           </NavLink>
+          <WallectConnectButton />
         </nav>
         <button className="hamburger-btn" onClick={toggleMenu}>
           <FontAwesomeIcon icon={menuIcon} />

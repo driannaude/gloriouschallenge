@@ -5,3 +5,8 @@
  */
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import 'crypto-browserify';
+import { Buffer } from 'buffer';
+
+// @ts-ignore
+window.Buffer = Buffer;

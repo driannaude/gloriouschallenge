@@ -1,6 +1,7 @@
 @import '../../variables.scss';
 
 $menu-transition-time: 0.25s;
+$navbar-btn-radius: 10px;
 
 .header {
   background-color: $primary-color;
@@ -21,13 +22,43 @@ $menu-transition-time: 0.25s;
     text-decoration: none;
   }
 
+  .wallet-connect-btn {
+    border: 0;
+    background: lighten($primary-color, 15%);
+    color: white;
+    border-radius: $navbar-btn-radius;
+    padding: 0px 10px;
+    height: 75%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    margin-top: -10px;
+
+    span {
+      max-width: 150px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    &:hover {
+      background: lighten($primary-color, 20%);
+    }
+  }
+  a,
+  button {
+    svg {
+      margin-right: 5px;
+    }
+  }
+
   div.menu {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    padding: 10px 10px 10px 0;
+    padding: 10px 10px 0 0;
     nav {
       display: flex;
+      align-items: center;
       a {
         display: flex;
         align-items: center;
@@ -37,11 +68,9 @@ $menu-transition-time: 0.25s;
         color: white;
         background-color: transparent;
         transition: background-color 0.05s ease-in, color 0.05s ease-in;
-        border-radius: 10px;
+        border-radius: $navbar-btn-radius $navbar-btn-radius 0 0;
         margin: 0 5px;
-        svg {
-          margin-right: 5px;
-        }
+
         &:hover {
           background-color: lighten($primary-color, 10%);
         }
@@ -82,11 +111,17 @@ $menu-transition-time: 0.25s;
           max-height: 100%;
         }
         a {
+          border-radius: $navbar-btn-radius;
           padding: 20px 20px;
           margin: 10px 20px;
           max-height: 75px;
           display: flex;
           justify-content: center;
+        }
+        .wallet-connect-btn {
+          height: auto;
+          padding: 20px 20px;
+          margin: 0;
         }
       }
       .hamburger-btn {
@@ -98,6 +133,7 @@ $menu-transition-time: 0.25s;
         opacity: 0.8;
         display: block;
         font-size: 1.5em;
+        margin-top: -5px;
         &:hover {
           opacity: 1;
           cursor: pointer;
