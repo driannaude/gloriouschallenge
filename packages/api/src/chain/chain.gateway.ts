@@ -23,32 +23,9 @@ export class ChainGateway
   constructor(private readonly cennzNetService: CennzNetService) {}
 
   onApplicationBootstrap() {
-    this.cennzNetService.api().rpc.chain.subscribeAllHeads((header) => {
+    this.cennzNetService.api().rpc.chain.subscribeNewHeads((header) => {
       this.server.emit('block_number:update', header.number);
     });
-    // this.cennzNetService.api().query.system.events((events) => {
-    //   this.logger.debug(`Received ${events.length} events`);
-    //   // Loop through the Vec<EventRecord>
-    //   events.forEach((record) => {
-    //     // Extract the phase, event and the event types
-    //     const { event, phase } = record;
-    //     const types = event.typeDef;
-    //     this.logger.debug(`Section ${event.section}`);
-    //     this.logger.debug(`Method ${event.method}`);
-    //     if (event.section == `genericAssets` && event.method == `Transferred`) {
-    //       // do something with event.data here
-    //       console.log(event);
-    //     }
-    //     if (
-    //       event.section === 'baseFee' &&
-    //       event.method === 'NewBaseFeePerGas'
-    //     ) {
-    //       event.data.forEach((data, index) => {
-    //         this.logger.log(`${types[index].type}: ${data.toNumber()}`);
-    //       });
-    //     }
-    //   });
-    // });
   }
 
   afterInit(server: Server) {
@@ -80,8 +57,10 @@ export class ChainGateway
             this.cennzNetService
               .api()
               .query.genericAsset.freeBalance(network, address, callback),
+          (callback) =>
+            this.cennzNetService.api().query.system.account(address, callback),
         ],
-        ([head, balance]) => {
+        ([head, balance, account]) => {
           if (!client.connected && unsubscribe) {
             (unsubscribe as any)();
           }
@@ -90,6 +69,9 @@ export class ChainGateway
 
           client.emit('balance:update', {
             balance: Number(balance),
+          });
+          client.emit('nonce:update', {
+            nonce: Number(account.nonce),
           });
         }
       );

@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { BalanceStatus } from '../../components/BalanceStatus';
 import { BlockNumberStatus } from '../../components/BlockNumberStatus';
+import { NonceStatus } from '../../components/NonceStatus';
 import { WalletSearch } from '../../components/WalletSearch';
 
 const DashboardPageComponent = () => {
@@ -18,9 +19,11 @@ const DashboardPageComponent = () => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-4"></div>
         <div className="col-4">
           <BalanceStatus address={address} />
+        </div>
+        <div className="col-4">
+          <NonceStatus address={address} />
         </div>
         <div className="col-4">
           <BlockNumberStatus />
