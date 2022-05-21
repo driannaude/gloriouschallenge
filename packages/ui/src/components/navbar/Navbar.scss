@@ -20,6 +20,11 @@ $navbar-btn-radius: 10px;
     padding: 10px 10px;
     font-weight: bold;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    img {
+      max-height: 100%;
+    }
   }
 
   .wallet-connect-btn {

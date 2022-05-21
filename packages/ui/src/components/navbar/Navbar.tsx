@@ -10,6 +10,7 @@ import {
 
 import './Navbar.scss';
 import { WallectConnectButton } from './WallectConnectButton';
+import logo from '../../assets/logo.png';
 
 const NavbarComponent = () => {
   // State
@@ -30,7 +31,8 @@ const NavbarComponent = () => {
   return (
     <header className="header">
       <NavLink to="/" className="logo">
-        Fun
+        <img src={logo} />
+        Challenge
       </NavLink>
       <div className="menu">
         <nav className={openClass}>
