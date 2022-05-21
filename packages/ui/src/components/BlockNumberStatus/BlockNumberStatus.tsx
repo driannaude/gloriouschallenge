@@ -6,13 +6,11 @@ import { faWaveSquare } from '@fortawesome/free-solid-svg-icons';
 import './BlockNumberStatus.scss';
 
 const BlockNumberStatusComponent = () => {
-  const { data: blockNumber, emit } = useWebSockets<number>(
-    'block_number:update'
-  );
+  const { data } = useWebSockets<{ block_number: number }>('chain:update');
 
   return (
     <div className="block-number-status">
-      <h1>{blockNumber ?? 'Loading...'}</h1>
+      <h1>{data?.block_number ?? 'Loading...'}</h1>
       <h5>
         <FontAwesomeIcon icon={faWaveSquare} />
         Current Block Number

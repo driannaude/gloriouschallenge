@@ -14,7 +14,9 @@ export class ChainGateway
 
   onApplicationBootstrap() {
     this.cennzNetService.api().rpc.chain.subscribeNewHeads((header) => {
-      this.server.emit('block_number:update', header.number);
+      this.server.emit('chain:update', {
+        block_number: header.number,
+      });
     });
   }
 }
