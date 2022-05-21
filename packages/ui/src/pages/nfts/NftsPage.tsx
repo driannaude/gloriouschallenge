@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const NftsPage = () => {
+export const NftsPageComponent = () => {
   return <div>NftsPage</div>;
 };
+
+export const NftsPage = React.memo(NftsPageComponent);

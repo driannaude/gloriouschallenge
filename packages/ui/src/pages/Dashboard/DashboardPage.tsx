@@ -1,14 +1,12 @@
 import React from 'react';
 import { useWebSockets } from '../../hooks/useWebSockets';
 
-export const HomePage: React.FC = () => {
+const DashboardPageComponent = () => {
   const {
     isConnected,
     data: blockNumber,
     emit,
-  } = useWebSockets<number>('update:block_number', {
-    onConnect: () => console.log('connected'),
-  });
+  } = useWebSockets<number>('update:block_number');
 
   return (
     <>
@@ -17,3 +15,5 @@ export const HomePage: React.FC = () => {
     </>
   );
 };
+
+export const DashboardPage = React.memo(DashboardPageComponent);
