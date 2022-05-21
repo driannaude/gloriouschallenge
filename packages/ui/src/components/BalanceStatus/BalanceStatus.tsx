@@ -13,7 +13,8 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
   // Hooks
   const { data, emit } = useWebSockets<{
     balance: number;
-  }>('balance:update');
+    nonce: number;
+  }>('wallet:update');
 
   // Memoized values
   const balance = useMemo(() => {
@@ -25,7 +26,7 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
     if (!address) return;
     // NOTE: UseEffect will be called twice in dev because we have strict mode on
     // This may result in additional subscriptions, but this is a red herring that only happens in dev
-    emit<{ address: string }>('balance:request', {
+    emit<{ address: string }>('wallet:request', {
       address,
     });
   }, [address]);

@@ -10,7 +10,9 @@ interface NonceStatusProps {
 }
 
 const NonceStatusComponent: React.FC<NonceStatusProps> = ({ address }) => {
-  const { data, emit } = useWebSockets<{ nonce: number }>('nonce:update');
+  const { data, emit } = useWebSockets<{ nonce: number; balance: number }>(
+    'wallet:update'
+  );
 
   const nonce = useMemo(() => {
     if (!address) return '-';

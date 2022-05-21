@@ -4,8 +4,8 @@ import { CennzNetService } from '../cennznet/cennznet.service';
 const CENNZ_NETWORK = 1;
 
 @Injectable()
-export class AddressService {
-  private logger: Logger = new Logger(AddressService.name);
+export class WalletService {
+  private logger: Logger = new Logger(WalletService.name);
   constructor(private readonly cennzNetService: CennzNetService) {}
 
   async getAddressInfo(network: number, address: string) {
