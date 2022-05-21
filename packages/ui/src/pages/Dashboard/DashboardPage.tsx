@@ -1,18 +1,14 @@
 import React from 'react';
-import { useWebSockets } from '../../hooks/useWebSockets';
+import { BlockNumberStatus } from '../../components/BlockNumberStatus';
 
 const DashboardPageComponent = () => {
-  const {
-    isConnected,
-    data: blockNumber,
-    emit,
-  } = useWebSockets<number>('update:block_number');
-
   return (
-    <>
-      <div>Block Number:</div>
-      <div>{blockNumber}</div>
-    </>
+    <div className="row">
+      <div className="col-8"></div>
+      <div className="col-4">
+        <BlockNumberStatus />
+      </div>
+    </div>
   );
 };
 
