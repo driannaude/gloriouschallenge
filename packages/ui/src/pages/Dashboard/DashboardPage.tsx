@@ -23,7 +23,7 @@ const DashboardPageComponent = () => {
           <SearchBox
             onSubmit={onUpdateWalletAddress}
             buttonText="Search"
-            placeholderText="Enter your CENNZNet Address..."
+            placeholderText="Enter CENNZNet Address..."
           />
         </div>
       </div>
