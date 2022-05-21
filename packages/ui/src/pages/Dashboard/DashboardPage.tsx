@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { BalanceStatus } from '../../components/BalanceStatus';
 import { BlockNumberStatus } from '../../components/BlockNumberStatus';
 import { NonceStatus } from '../../components/NonceStatus';
-import { WalletSearch } from '../../components/WalletSearch';
+import { SearchBox } from '../../components/SearchBox';
 
 const DashboardPageComponent = () => {
   // State
@@ -19,6 +19,15 @@ const DashboardPageComponent = () => {
   return (
     <div className="container">
       <div className="row">
+        <div className="col-12">
+          <SearchBox
+            onSubmit={onUpdateWalletAddress}
+            buttonText="Search"
+            placeholderText="Enter your CENNZNet Address..."
+          />
+        </div>
+      </div>
+      <div className="row">
         <div className="col-4">
           <BalanceStatus address={address} />
         </div>
@@ -27,11 +36,6 @@ const DashboardPageComponent = () => {
         </div>
         <div className="col-4">
           <BlockNumberStatus />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-12">
-          <WalletSearch onUpdate={onUpdateWalletAddress} />
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ const NavbarComponent = () => {
           </NavLink>
           <NavLink to="/nfts" className={getLinkClass} onClick={toggleMenu}>
             <FontAwesomeIcon icon={faCrown} />
-            NFTs
+            Assets
           </NavLink>
           <WallectConnectButton />
         </nav>

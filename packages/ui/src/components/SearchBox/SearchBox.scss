@@ -1,18 +1,18 @@
 @import '../../variables.scss';
 
-.wallet-search-card {
+.search-box {
   background-color: $card-bg;
   border-radius: $card-border-radius;
   padding: $card-padding;
 
-  .search-inputs {
+  .inputs {
     display: flex;
     flex-direction: row;
     align-items: center;
     > * {
       margin: 5px;
     }
-    input.search-box {
+    input {
       border: 2px solid $input-border;
       border-radius: 5px;
       padding: 0.5em 1.5em;

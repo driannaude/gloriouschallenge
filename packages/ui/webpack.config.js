@@ -20,6 +20,5 @@ module.exports = (config, context) => {
     },
   });
 
-  console.log(mergedConfig);
   return mergedConfig;
 };

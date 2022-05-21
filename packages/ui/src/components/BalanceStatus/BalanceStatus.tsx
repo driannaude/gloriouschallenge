@@ -23,7 +23,6 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
 
   useEffect(() => {
     if (!address) return;
-    console.log('subscribing');
     // NOTE: UseEffect will be called twice in dev because we have strict mode on
     // This may result in additional subscriptions, but this is a red herring that only happens in dev
     emit<{ address: string }>('balance:request', {
