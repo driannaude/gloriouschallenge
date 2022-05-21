@@ -1,0 +1,19 @@
+@import '../../variables.scss';
+
+.wallet-info-card {
+  background-color: $card-bg;
+  border-radius: $card-border-radius;
+  padding: $card-padding;
+
+  input.search-box {
+    border: 2px solid $input-border;
+    border-radius: 5px;
+    padding: 0.5em 1.5em;
+    width: 100%;
+    outline: none;
+    &:active,
+    &:focus {
+      border-color: $primary-color;
+    }
+  }
+}

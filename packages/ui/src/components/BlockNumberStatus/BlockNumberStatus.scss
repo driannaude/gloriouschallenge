@@ -5,10 +5,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: $bg-status;
+  background: $card-bg;
   width: auto;
   padding: 1em;
-  border-radius: 10px;
+  border-radius: $card-border-radius;
   text-align: center;
   h1 {
     font-weight: bold;
