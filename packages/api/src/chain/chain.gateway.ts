@@ -20,7 +20,22 @@ export class ChainGateway
 {
   private logger: Logger = new Logger(ChainGateway.name);
   private server: Server;
+  private subscriptions: Record<string, UnsubscribePromise> = {};
+
   constructor(private readonly cennzNetService: CennzNetService) {}
+
+  private async unsubscribeClient(id) {
+    const unsubscribe = this.subscriptions[id];
+    if (unsubscribe) {
+      // type assertion because UnsubscribePromise has no call signature.
+      (await unsubscribe)();
+    }
+  }
+
+  private async subscribeClient(id: string, subscription: UnsubscribePromise) {
+    await this.unsubscribeClient(id);
+    this.subscriptions[id] = subscription;
+  }
 
   onApplicationBootstrap() {
     this.cennzNetService.api().rpc.chain.subscribeNewHeads((header) => {
@@ -42,7 +57,7 @@ export class ChainGateway
   }
 
   @SubscribeMessage('balance:request')
-  handleMessage(client: Socket, payload: { address: string }) {
+  async handleMessage(client: Socket, payload: { address: string }) {
     const network = 1;
     const { address } = payload;
     this.logger.debug(
@@ -60,9 +75,10 @@ export class ChainGateway
           (callback) =>
             this.cennzNetService.api().query.system.account(address, callback),
         ],
-        ([head, balance, account]) => {
+        async ([head, balance, account]) => {
           if (!client.connected && unsubscribe) {
-            (unsubscribe as any)();
+            // type assertion because UnsubscribePromise has no call signature.
+            (await unsubscribe)();
           }
 
           this.logger.log(`#${head.number}: ${client.id} has ${balance} units`);
@@ -75,5 +91,6 @@ export class ChainGateway
           });
         }
       );
+    await this.subscribeClient(client.id, unsubscribe);
   }
 }
