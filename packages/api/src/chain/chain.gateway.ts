@@ -1,8 +1,10 @@
+import { UnsubscribePromise } from '@cennznet/api/types';
 import { Logger, OnApplicationBootstrap } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
+  SubscribeMessage,
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
@@ -21,9 +23,32 @@ export class ChainGateway
   constructor(private readonly cennzNetService: CennzNetService) {}
 
   onApplicationBootstrap() {
-    this.cennzNetService.api().rpc.chain.subscribeNewHeads((header) => {
-      this.server.emit('update:block_number', header.number);
+    this.cennzNetService.api().rpc.chain.subscribeAllHeads((header) => {
+      this.server.emit('block_number:update', header.number);
     });
+    // this.cennzNetService.api().query.system.events((events) => {
+    //   this.logger.debug(`Received ${events.length} events`);
+    //   // Loop through the Vec<EventRecord>
+    //   events.forEach((record) => {
+    //     // Extract the phase, event and the event types
+    //     const { event, phase } = record;
+    //     const types = event.typeDef;
+    //     this.logger.debug(`Section ${event.section}`);
+    //     this.logger.debug(`Method ${event.method}`);
+    //     if (event.section == `genericAssets` && event.method == `Transferred`) {
+    //       // do something with event.data here
+    //       console.log(event);
+    //     }
+    //     if (
+    //       event.section === 'baseFee' &&
+    //       event.method === 'NewBaseFeePerGas'
+    //     ) {
+    //       event.data.forEach((data, index) => {
+    //         this.logger.log(`${types[index].type}: ${data.toNumber()}`);
+    //       });
+    //     }
+    //   });
+    // });
   }
 
   afterInit(server: Server) {
@@ -39,9 +64,34 @@ export class ChainGateway
     this.logger.log(`Client disconnected: ${client.id}`);
   }
 
-  //   @SubscribeMessage('message')
-  //   handleMessage(client: Socket, payload: any): WsResponse<string> {
-  //     this.logger.debug(`${client.id} says`, payload, typeof payload);
-  //     return { event: 'message', data: 'hello' };
-  //   }
+  @SubscribeMessage('balance:request')
+  handleMessage(client: Socket, payload: { address: string }) {
+    const network = 1;
+    const { address } = payload;
+    this.logger.debug(
+      `Client ${client.id} subscribing to balance on ${network}...`
+    );
+    const unsubscribe = this.cennzNetService
+      .api()
+      .combineLatest(
+        [
+          this.cennzNetService.api().rpc.chain.subscribeNewHeads,
+          (callback) =>
+            this.cennzNetService
+              .api()
+              .query.genericAsset.freeBalance(network, address, callback),
+        ],
+        ([head, balance]) => {
+          if (!client.connected && unsubscribe) {
+            (unsubscribe as any)();
+          }
+
+          this.logger.log(`#${head.number}: ${client.id} has ${balance} units`);
+
+          client.emit('balance:update', {
+            balance: Number(balance),
+          });
+        }
+      );
+  }
 }

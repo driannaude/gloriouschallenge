@@ -7,7 +7,7 @@ import './BlockNumberStatus.scss';
 
 const BlockNumberStatusComponent = () => {
   const { data: blockNumber, emit } = useWebSockets<number>(
-    'update:block_number'
+    'block_number:update'
   );
 
   return (

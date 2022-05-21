@@ -1,0 +1,35 @@
+@import '../../variables.scss';
+
+.wallet-search-card {
+  background-color: $card-bg;
+  border-radius: $card-border-radius;
+  padding: $card-padding;
+
+  .search-inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    > * {
+      margin: 5px;
+    }
+    input.search-box {
+      border: 2px solid $input-border;
+      border-radius: 5px;
+      padding: 0.5em 1.5em;
+      width: 100%;
+      outline: none;
+      &:active,
+      &:focus {
+        border-color: $primary-color;
+      }
+    }
+
+    button {
+      background: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.5em 1.5em;
+    }
+  }
+}
