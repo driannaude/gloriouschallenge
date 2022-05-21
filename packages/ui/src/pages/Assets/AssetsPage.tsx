@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CollectionSummary } from '../../components/CollectionSummary';
 import { SearchBox } from '../../components/SearchBox';
 
 export const AssetsPageComponent = () => {
@@ -13,6 +14,9 @@ export const AssetsPageComponent = () => {
             placeholderText="Collection ID..."
             buttonText="Search"
           />
+        </div>
+        <div className="col-12">
+          <CollectionSummary id={collectionId} />
         </div>
       </div>
     </div>

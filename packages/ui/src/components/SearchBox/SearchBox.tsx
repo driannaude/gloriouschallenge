@@ -25,6 +25,12 @@ const SearchBoxComponent: React.FC<SearchBoxProps> = ({
     onSubmit(query);
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onSubmitSearch();
+    }
+  };
+
   return (
     <div className="search-box">
       <div className="row">
@@ -33,6 +39,7 @@ const SearchBoxComponent: React.FC<SearchBoxProps> = ({
             onChange={onUpdateQuery}
             placeholder={placeholderText}
             value={query}
+            onKeyDown={onKeyDown}
           />
 
           <button className="search-btn" onClick={onSubmitSearch}>
