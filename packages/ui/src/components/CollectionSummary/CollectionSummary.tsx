@@ -51,9 +51,13 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
             justifyContent="space-between"
           >
             <Typography variant="subtitle1" fontWeight="bold">
-              #{data.collectionId} - {data.name}
+              #<span data-testid="collection-id">{data.collectionId}</span> -{' '}
+              <span data-testid="collection-name">{data.name}</span>
             </Typography>
-            <Button onClick={() => inspectOwner(data.owner)}>
+            <Button
+              data-testid="collection-owner-link"
+              onClick={() => inspectOwner(data.owner)}
+            >
               <small>{data.owner}</small>
             </Button>
           </Stack>
@@ -67,7 +71,14 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
           const key = token.path.join('-');
           const [collectionId, seriesId, serialNumber] = token.path;
           return (
-            <Grid item md={6} sm={12} xs={12} key={token.path.join('-')}>
+            <Grid
+              data-testid={`token-${token.path.join('-')}`}
+              item
+              md={6}
+              sm={12}
+              xs={12}
+              key={token.path.join('-')}
+            >
               <Card>
                 <CardContent>
                   <Stack
@@ -85,7 +96,10 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
                         {serialNumber}
                       </Typography>
                     </Breadcrumbs>
-                    <Button onClick={() => inspectOwner(token.owner)}>
+                    <Button
+                      data-testid={`${token.path.join('-')}-link`}
+                      onClick={() => inspectOwner(token.owner)}
+                    >
                       <small>{token.owner}</small>
                     </Button>
                   </Stack>

@@ -31,6 +31,10 @@ jest.mock('@glorious-challenge/websockets', () => {
   return websockets;
 });
 
+afterAll(() => {
+  jest.clearAllMocks();
+});
+
 describe('Balance status tests', () => {
   test('it renders the component', () => {
     const component = render(<BalanceStatus />);
