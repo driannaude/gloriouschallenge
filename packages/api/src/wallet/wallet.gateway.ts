@@ -1,5 +1,6 @@
 import { UnsubscribePromise } from '@cennznet/api/types';
 import {
+  ECENNZNetwork,
   IWalletAccount,
   IWalletRequest,
 } from '@glorious-challenge/api-interface';
@@ -23,8 +24,7 @@ export class WalletGateway extends SubscribableGateway {
 
   @SubscribeMessage('wallet:request')
   async handleMessage(client: Socket, payload: IWalletRequest) {
-    const network = 1;
-    const { address } = payload;
+    const { address, network } = payload;
     this.logger.debug(
       `Client ${client.id} subscribing to balance on ${network}...`
     );

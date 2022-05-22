@@ -1,3 +1,5 @@
+import { ECENNZNetwork } from './enums';
+
 export interface IWalletAccount {
   address: string;
   balance: number;
@@ -6,4 +8,5 @@ export interface IWalletAccount {
 
 export interface IWalletRequest {
   address: string;
+  network: ECENNZNetwork;
 }

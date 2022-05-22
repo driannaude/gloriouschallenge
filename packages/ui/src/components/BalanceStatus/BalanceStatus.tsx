@@ -5,6 +5,7 @@ import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 import './BalanceStatus.scss';
 import {
+  ECENNZNetwork,
   IWalletAccount,
   IWalletRequest,
 } from '@glorious-challenge/api-interface';
@@ -29,6 +30,7 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
     // This may result in additional subscriptions, but this is a red herring that only happens in dev
     emit<IWalletRequest>('wallet:request', {
       address,
+      network: ECENNZNetwork.azalea,
     });
   }, [address]);
 
