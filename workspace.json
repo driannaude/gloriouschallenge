@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "api": "packages/api",
+    "api-interface": "packages/api-interface",
     "ui": "packages/ui",
     "ui-e2e": "packages/ui-e2e",
     "websockets": "packages/websockets"

@@ -11,6 +11,10 @@ import React, { useEffect } from 'react';
 import { useWebSockets } from '../../hooks/useWebSockets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import {
+  INftCollectionSummary,
+  INftCollectionSummaryRequest,
+} from '@glorious-challenge/api-interface';
 
 interface CollectionSummaryProps {
   id: string | undefined;
@@ -20,19 +24,15 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
   id,
 }) => {
   // Hooks
-  const { data, emit } = useWebSockets<{
-    collectionId: string;
-    name: string;
-    owner: string;
-    tokens: { serialNumber: string; seriesId: string; owner: string }[];
-  }>('asset:update');
+  const { data, emit } = useWebSockets<INftCollectionSummary>('asset:update');
   // Lifecycle methods
   useEffect(() => {
     if (!id) return;
-    emit<{ id: string }>('asset:request', { id });
+    emit<INftCollectionSummaryRequest>('asset:request', { id });
   }, [id]);
 
   if (!data) return null;
+  console.log(data);
 
   return (
     <>
@@ -50,27 +50,31 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
         <Divider />
       </Box>
       <Grid container spacing={5} rowSpacing={2}>
-        {data.tokens.map((token) => (
-          <Grid item md={4} sm={6} xs={12}>
-            <Card>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Series ID: {token.seriesId}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  Serial Number: {token.serialNumber}
-                </Typography>
-                <Typography variant="body2">
-                  <small>Owner: {token.owner}</small>
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
+        {data.tokens.map((token) => {
+          const key = token.path.join('-');
+          const [collectionId, seriesId, serialNumber] = token.path;
+          return (
+            <Grid item md={4} sm={6} xs={12} key={token.path.join('-')}>
+              <Card>
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Series ID: {seriesId}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    Serial Number: {serialNumber}
+                  </Typography>
+                  <Typography variant="body2">
+                    <small>Owner: {token.owner}</small>
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          );
+        })}
       </Grid>
     </>
   );

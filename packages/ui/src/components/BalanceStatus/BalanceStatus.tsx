@@ -1,9 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useWebSockets } from '../../hooks/useWebSockets';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
 
 import './BalanceStatus.scss';
+import {
+  IWalletAccount,
+  IWalletRequest,
+} from '@glorious-challenge/api-interface';
 
 interface BalanceStatusProps {
   address: string | null;
@@ -11,10 +15,7 @@ interface BalanceStatusProps {
 
 const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
   // Hooks
-  const { data, emit } = useWebSockets<{
-    balance: number;
-    nonce: number;
-  }>('wallet:update');
+  const { data, emit } = useWebSockets<IWalletAccount>('wallet:update');
 
   // Memoized values
   const balance = useMemo(() => {
@@ -26,7 +27,7 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
     if (!address) return;
     // NOTE: UseEffect will be called twice in dev because we have strict mode on
     // This may result in additional subscriptions, but this is a red herring that only happens in dev
-    emit<{ address: string }>('wallet:request', {
+    emit<IWalletRequest>('wallet:request', {
       address,
     });
   }, [address]);

@@ -15,7 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@glorious-challenge/websockets": ["packages/websockets/src/index.ts"]
+      "@glorious-challenge/api-interface": [
+        "packages/api-interface/src/index.ts"
+      ],
+      "@glorious-challenge/websockets": ["packages/websockets/src/index.ts"],
+      "@polkadot/types": [
+        "./node_modules/@cennznet/types/interfaces/augment-api.d.ts"
+      ],
+      "@polkadot/types/augment": [
+        "./node_modules/@cennznet/types/interfaces/augment-types.d.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

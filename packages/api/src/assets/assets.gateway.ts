@@ -1,3 +1,4 @@
+import { INftCollectionSummaryRequest } from '@glorious-challenge/api-interface';
 import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
 import { CennzNetService } from '../cennznet/cennznet.service';
@@ -13,7 +14,7 @@ export class AssetsGateway extends SubscribableGateway {
     super(AssetsGateway.name);
   }
   @SubscribeMessage('asset:request')
-  async handleMessage(client: Socket, payload: { id: string }) {
+  async handleMessage(client: Socket, payload: INftCollectionSummaryRequest) {
     const unsubscribe = this.cennzNetService
       .api()
       .combineLatest(

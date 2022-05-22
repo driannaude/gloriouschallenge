@@ -1,4 +1,8 @@
 import { UnsubscribePromise } from '@cennznet/api/types';
+import {
+  IWalletAccount,
+  IWalletRequest,
+} from '@glorious-challenge/api-interface';
 import { Logger, OnApplicationBootstrap } from '@nestjs/common';
 import {
   OnGatewayConnection,
@@ -18,7 +22,7 @@ export class WalletGateway extends SubscribableGateway {
   }
 
   @SubscribeMessage('wallet:request')
-  async handleMessage(client: Socket, payload: { address: string }) {
+  async handleMessage(client: Socket, payload: IWalletRequest) {
     const network = 1;
     const { address } = payload;
     this.logger.debug(
@@ -43,10 +47,13 @@ export class WalletGateway extends SubscribableGateway {
 
           this.logger.log(`#${head.number}: ${client.id} has ${balance} units`);
 
-          client.emit('wallet:update', {
+          const message: IWalletAccount = {
+            address,
             balance: Number(balance),
             nonce: Number(account.nonce),
-          });
+          };
+
+          client.emit('wallet:update', message);
         }
       );
     await this.subscribeClient(client.id, unsubscribe);

@@ -1,6 +1,9 @@
-import { SerialNumber, SeriesId } from '@cennznet/types';
 import { Injectable, Logger } from '@nestjs/common';
 import { CennzNetService } from '../cennznet/cennznet.service';
+import {
+  INftCollectionSummary,
+  INftToken,
+} from '@glorious-challenge/api-interface';
 
 @Injectable()
 export class AssetsService {
@@ -8,52 +11,42 @@ export class AssetsService {
 
   constructor(private readonly cennzNetService: CennzNetService) {}
 
-  async getCollectionName(id: string) {
+  async getCollectionName(id: string): Promise<string> {
     const name = await this.cennzNetService.api().query.nft.collectionName(id);
-    return name.toHuman();
+    return name.toHuman().toString();
   }
 
-  async getCollectionRoyalties(id: string) {
-    const royalties = await this.cennzNetService
-      .api()
-      .query.nft.collectionRoyalties(id);
-    return royalties.toHuman();
-  }
-
-  async getCollectionOwner(id: string) {
+  async getCollectionOwner(id: string): Promise<string> {
     const owner = await this.cennzNetService
       .api()
       .query.nft.collectionOwner(id);
-    return owner.toHuman();
+    return owner.toHuman().toString();
   }
 
-  async getCollectionTokens(id: string) {
+  async getCollectionTokens(id: string): Promise<INftToken[]> {
     const tokenInfo = await this.cennzNetService
       .api()
       .derive.nft.tokenInfoForCollection(id);
 
-    const tokens = tokenInfo.map((token) => {
+    const tokens: INftToken[] = tokenInfo.map((token) => {
       const { tokenId, owner } = token;
       const { seriesId, serialNumber } = tokenId;
       return {
-        serialNumber: serialNumber.toHuman(),
-        seriesId: seriesId.toHuman(),
-        owner: owner.toString(),
+        path: [Number(id), Number(seriesId), Number(serialNumber)],
+        owner: owner,
       };
     });
     return tokens;
   }
 
-  async getCollectionSummary(id: string) {
+  async getCollectionSummary(id: string): Promise<INftCollectionSummary> {
     const name = await this.getCollectionName(id);
-    const royalties = await this.getCollectionRoyalties(id);
     const owner = await this.getCollectionOwner(id);
     const tokens = await this.getCollectionTokens(id);
-    const response = {
-      collectionId: id,
+    const response: INftCollectionSummary = {
+      collectionId: Number(id),
       name,
       owner,
-      royalties,
       tokens,
     };
 
