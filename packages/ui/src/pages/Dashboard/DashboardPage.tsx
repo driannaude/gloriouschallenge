@@ -27,7 +27,6 @@ const DashboardPageComponent = () => {
           <SearchBox
             onSubmit={onUpdateWalletAddress}
             initialValue={address}
-            buttonText="Search"
             placeholderText="CENNZNet Address"
           />
         </Grid>

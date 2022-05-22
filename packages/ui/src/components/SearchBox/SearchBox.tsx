@@ -12,19 +12,17 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 interface SearchBoxProps {
   placeholderText: string;
-  buttonText: string;
   initialValue?: string | null;
   onSubmit: (address: string) => void;
 }
 
 const SearchBoxComponent: React.FC<SearchBoxProps> = ({
   initialValue,
-  buttonText,
   placeholderText,
   onSubmit,
 }) => {
   // State
-  const [query, setQuery] = useState(initialValue ?? '');
+  const [query, setQuery] = useState(initialValue || '');
 
   // Hooks
   const theme = useTheme();
@@ -46,14 +44,18 @@ const SearchBoxComponent: React.FC<SearchBoxProps> = ({
           {placeholderText}
         </InputLabel>
         <OutlinedInput
-          id="search-box"
+          id="outlined-adornment-search"
           type="text"
           label={placeholderText}
           onChange={onUpdateQuery}
           value={query}
+          inputProps={{
+            'data-testid': 'search-input',
+          }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
+                data-testid="search-button"
                 aria-label="submit form"
                 onClick={onSubmitSearch}
                 edge="end"

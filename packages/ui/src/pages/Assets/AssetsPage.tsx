@@ -13,7 +13,6 @@ export const AssetsPageComponent = () => {
           <SearchBox
             onSubmit={setCollectionId}
             placeholderText="Collection ID"
-            buttonText="Search"
           />
         </Grid>
         <Grid item xs={12}>
