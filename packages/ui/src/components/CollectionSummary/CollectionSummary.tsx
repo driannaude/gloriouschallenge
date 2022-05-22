@@ -45,11 +45,17 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
     <>
       <Grid container spacing={2} rowSpacing={2}>
         <Grid item xs={12}>
-          <Stack direction="column">
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Typography variant="subtitle1" fontWeight="bold">
               #{data.collectionId} - {data.name}
             </Typography>
-            <Typography variant="caption">Owned by: {data.owner}</Typography>
+            <Button onClick={() => inspectOwner(data.owner)}>
+              <small>{data.owner}</small>
+            </Button>
           </Stack>
         </Grid>
       </Grid>
@@ -64,15 +70,21 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
             <Grid item md={6} sm={12} xs={12} key={token.path.join('-')}>
               <Card>
                 <CardContent>
-                  <Breadcrumbs aria-label="breadcrumb">
-                    <Typography variant="h5">{collectionId}</Typography>
-                    <Typography variant="h5">{seriesId}</Typography>
-                    <Typography variant="h5" color={theme.palette.primary.main}>
-                      {serialNumber}
-                    </Typography>
-                  </Breadcrumbs>
-                  <Stack direction="column">
-                    <Typography variant="subtitle2">Owned by</Typography>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Breadcrumbs aria-label="breadcrumb">
+                      <Typography variant="h5">{collectionId}</Typography>
+                      <Typography variant="h5">{seriesId}</Typography>
+                      <Typography
+                        variant="h5"
+                        color={theme.palette.primary.main}
+                      >
+                        {serialNumber}
+                      </Typography>
+                    </Breadcrumbs>
                     <Button onClick={() => inspectOwner(token.owner)}>
                       <small>{token.owner}</small>
                     </Button>
