@@ -80,10 +80,10 @@ $navbar-btn-radius: 10px;
           background-color: lighten($primary-color, 10%);
         }
         &.active {
-          background: white;
+          background: lighten($primary-color, 40%);
           color: $primary-color;
           &:hover {
-            background-color: white;
+            background: lighten($primary-color, 40%);
           }
         }
       }

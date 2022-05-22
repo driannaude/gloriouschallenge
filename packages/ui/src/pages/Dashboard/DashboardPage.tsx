@@ -3,6 +3,7 @@ import { BalanceStatus } from '../../components/BalanceStatus';
 import { BlockNumberStatus } from '../../components/BlockNumberStatus';
 import { NonceStatus } from '../../components/NonceStatus';
 import { SearchBox } from '../../components/SearchBox';
+import { Grid, Card, Container } from '@mui/material';
 
 const DashboardPageComponent = () => {
   // State
@@ -17,28 +18,26 @@ const DashboardPageComponent = () => {
   );
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
+    <Container>
+      <Grid container component={Card} spacing={2} rowSpacing={2} padding={2}>
+        <Grid item xs={12}>
           <SearchBox
             onSubmit={onUpdateWalletAddress}
             buttonText="Search"
-            placeholderText="Enter CENNZNet Address..."
+            placeholderText="CENNZNet Address"
           />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-4">
+        </Grid>
+        <Grid item md={4} xs={12}>
           <BalanceStatus address={address} />
-        </div>
-        <div className="col-4">
+        </Grid>
+        <Grid item md={4} xs={12}>
           <NonceStatus address={address} />
-        </div>
-        <div className="col-4">
+        </Grid>
+        <Grid item md={4} xs={12}>
           <BlockNumberStatus />
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

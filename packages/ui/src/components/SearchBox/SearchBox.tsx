@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-
-import './SearchBox.scss';
+import {
+  useTheme,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 interface SearchBoxProps {
   placeholderText: string;
@@ -16,38 +24,45 @@ const SearchBoxComponent: React.FC<SearchBoxProps> = ({
   // State
   const [query, setQuery] = useState('');
 
+  // Hooks
+  const theme = useTheme();
+
   // Handlers
   const onUpdateQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value || '');
   };
 
-  const onSubmitSearch = () => {
+  const onSubmitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     onSubmit(query);
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      onSubmitSearch();
-    }
-  };
-
   return (
-    <div className="search-box">
-      <div className="row">
-        <div className="col-12 inputs">
-          <input
-            onChange={onUpdateQuery}
-            placeholder={placeholderText}
-            value={query}
-            onKeyDown={onKeyDown}
-          />
-
-          <button className="search-btn" onClick={onSubmitSearch}>
-            {buttonText}
-          </button>
-        </div>
-      </div>
-    </div>
+    <form onSubmit={onSubmitSearch}>
+      <FormControl variant="outlined" fullWidth>
+        <InputLabel htmlFor="outlined-adornment-search">
+          {placeholderText}
+        </InputLabel>
+        <OutlinedInput
+          id="search-box"
+          type="text"
+          label={placeholderText}
+          onChange={onUpdateQuery}
+          value={query}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="submit form"
+                onClick={onSubmitSearch}
+                edge="end"
+              >
+                <FontAwesomeIcon icon={faSearch} size="xs" />
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+    </form>
   );
 };
 

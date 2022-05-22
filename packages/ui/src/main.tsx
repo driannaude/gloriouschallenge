@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './theme';
 
 import './main.scss';
 
@@ -13,11 +15,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/nfts" element={<WithNavbar component={AssetsPage} />} />
-        <Route path="/" element={<WithNavbar component={DashboardPage} />} />
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/nfts" element={<WithNavbar component={AssetsPage} />} />
+          <Route path="/" element={<WithNavbar component={DashboardPage} />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>
 );
