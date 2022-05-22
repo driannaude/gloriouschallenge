@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { CennzNetModule } from '../cennznet/cennznet.module';
 import { ChainGateway } from './chain.gateway';
 
 describe('ChainGateway', () => {
@@ -6,6 +7,7 @@ describe('ChainGateway', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [CennzNetModule],
       providers: [ChainGateway],
     }).compile();
 
