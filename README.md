@@ -1,41 +1,110 @@
+# Glorious Challenge - Drian
 
+## Checklist
 
-# GloriousChallenge
+- [x] Build a responsive React application.
+- [x] The application must have two pages navigated by URL.
+- [x] The application must have a navigation bar at the top.
+- [x] The navigation bar must become a hamburger menu on mobile resolutions.
+- [x] The CSS of the menu and its responsiveness must be written by the developer.
+- [x] Build a Node.js API that on boot connects to the CENNZnet blockchain via the CENNZnet API (@cennznet/api).
+- [x] The API subscribes to 3 different chain state queries. Examples: Current block number; Name of an NFT collection (try collectionIds 55 and 62), or total Issuance of a generic asset (try asset ID 1002).
+  - [x] Current block number
+  - [x] Account Nonce
+  - [x] Account Balance
+  - [x] Name of NFT Collection
+  - [x] NFT Collection token information
+- [x] Each of the application pages must display data from the API.
+- [x] The application and API must have adequate unit and functional test coverage.\*
+- [x] the provider string for API connections to CENNZnet is wss://cennznet.unfrastructure.io/public/ws
 
-This project was generated using [Nx](https://nx.dev).
+# Bonus objectives
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+- [x] The page data changes when the blockchain data changes. This is easiest to see when displaying the current block number.
+- [x] A CENNZnet address (try 5F4bqAuskqbRULcnD72songmAj9Rk2iWuE6QDeWTfiU3caR9) may be entered into a form on a page causing information related to the address to be displayed.
+- [x] The application may connect to the CENNZnet Chrome Extension
 
-🔎 **Smart, Fast and Extensible Build System**
+## Postmortem Notes
 
-## Adding capabilities to your workspace
+### Liberties taken
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+- I took a risk and loosely interpreted `The CSS of the menu and its responsiveness must be written by the developer` to mean I was allowed to use design systems outside of the menu/navbar, so I added @mui to speed up layout and design a little
+- Instead of a standard REST or GraphQL API, I implemented a websocket API to aid with real time client updates
+- I used `nx` to create a monorepo for the project. This helped me to create shared modules between the front- and backend and keep things organised at speed, as well as provide me with a starting point for a testing framework.
+- I used `NestJS` as a backend framework to help me do some of the grunt work of setting up the API, deal with dependency injection and save time on a lot of setup tasks.
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+### What I think I did well
 
-Below are our core plugins:
+- The API design is clean, has good separation of concerns and using modules and DI I could ensure I kept bloat to a minimum
+- The project is fairly well structured and component-ized.
+- I managed to get some shared types/interfaces written to ensure type safety between the back and frontend
+- I think I achieved a fair amount in the time allowed
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+### What I could have done better
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+- The UI - it's not very pretty, and I think due to lack of domain knowledge it's probably not very useful.
+- Testing - I aimed for at least 80% test coverage, and for the most part achieved this for tested modules, but ran out of time to test everything thoroughly.
+- Additionally, testing mocks could have been cleaner and more thought out.
+- Error/exception handling
+- I wasted a bit of time trying to implement end-to-end testing with cypress, probably should have abandoned this idea sooner.
+
+### What I struggled with
+
+- This was my first time testing a websocket API and I spent a good amount of time figuring out how to mock websocket requests, which could have been spent on polishing functionality and UI.
+- I had a good amount of difficulty wrapping my head around the CENNZNet api and going in with no domain knowledge, I had to learn quickly. This mean that the utility of what I built isn't where I'd like it to be, and I'd argue while I achieved the goals set, I could have built something more useful for a specific use case given some more time to understand the domain better.
+
+### Things I'd improve on if this were a real project
+
+- spend more time understanding the domain and build something with a specific use case (e.g. A tool to mint & CENNZNet NFTs, A block explorer)
+- Better error handling - verifying addresses before api requests, handling some uncaught exceptions I can think of as I type this
+- Improve the UI - this is a given, there is always room for improvement here.
+- Allow users to switch between the Main and Testnet.
+- Use the wallet address when connecting to fetch dashboard information
+- Add users' owned NFTs to the dashboard
+
+### Summary
+
+I think for a couple of days, learning about an entirely new domain/space, I did ok. It was definitely fun, and ultimately I think I delivered on most of the requirements, including some of the bonus requirements.
+
+# Running the project
+
+Start of with installing dependencies
+
+```
+npm i
+```
+
+To spin up the api
+
+```
+npx nx serve api
+```
+
+To spin up the UI
+
+```
+npx nx serve ui
+```
+
+Running tests
+
+```
+npx nx test {ui|api}
+```
+
+Run tests and output coverage to `coverage/packages/`
+
+```
+npx nx test {ui|api} --codeCoverage
+```
+
+# Workspace overview
+
+Below is an overview of tooling and commands available in this project.
 
 ## Generate an application
 
 Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
 
 When using Nx, you can create multiple applications and libraries in the same workspace.
 
@@ -71,24 +140,6 @@ Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cy
 
 Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
 
-## Understand your workspace
+## Understanding dependency tree
 
 Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
