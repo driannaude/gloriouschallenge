@@ -1,12 +1,16 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { NonceStatus } from './NonceStatus';
+import { BalanceStatus } from './BalanceStatus';
 
 const TEST_ADDRESS = '5F4bqAuskqbRULcnD72songmAj9Rk2iWuE6QDeWTfiU3caR9';
-const TEST_PAYLOAD = { nonce: 123, balance: 123 };
+const TEST_PAYLOAD = {
+  address: TEST_ADDRESS,
+  balance: 123,
+  nonce: 123,
+};
 
 jest.mock('@glorious-challenge/websockets', () => {
-  return {
+  const websockets = {
     ws: {
       connect: jest.fn(),
       on: jest.fn((event, handler, ...other) => {
@@ -19,30 +23,29 @@ jest.mock('@glorious-challenge/websockets', () => {
             return handler(TEST_PAYLOAD);
         }
       }),
-      emit: jest.fn((event, handler) => handler()),
     },
   };
+  websockets.ws.emit = jest.fn((event, data) =>
+    websockets.ws.on(event, (data) => null)
+  );
+  return websockets;
 });
 
-afterAll(() => {
-  jest.clearAllMocks();
-});
-
-describe('Nonce status tests', () => {
+describe('Block number status tests', () => {
   test('it renders the component', () => {
-    const component = render(<NonceStatus address={TEST_ADDRESS} />);
-    const nonce = component.getByTestId('nonce');
-    expect(nonce).toBeTruthy();
+    const component = render(<BalanceStatus />);
+    const blockNumber = component.getByTestId('balance');
+    expect(blockNumber).toBeTruthy();
   });
   test('it renders a value when an adress has passed and the websocket updates', async () => {
-    const component = render(<NonceStatus address={TEST_ADDRESS} />);
-    const nonce = component.getByTestId('nonce');
+    const component = render(<BalanceStatus address={TEST_ADDRESS} />);
+    const nonce = component.getByTestId('balance');
     expect(nonce.textContent).toEqual(TEST_PAYLOAD.nonce.toString());
   });
 
   test('it does not render a value if address is empty', async () => {
-    const component = render(<NonceStatus />);
-    const nonce = component.getByTestId('nonce');
+    const component = render(<BalanceStatus />);
+    const nonce = component.getByTestId('balance');
     expect(nonce.textContent).toEqual('-');
   });
 });

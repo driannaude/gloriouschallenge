@@ -36,7 +36,7 @@ const BalanceStatusComponent: React.FC<BalanceStatusProps> = ({ address }) => {
 
   return (
     <div className="block-number-status">
-      <h1>{balance}</h1>
+      <h1 data-testid="balance">{balance}</h1>
       <h5>
         <FontAwesomeIcon icon={faDollarSign} />
         CENNZ Balance

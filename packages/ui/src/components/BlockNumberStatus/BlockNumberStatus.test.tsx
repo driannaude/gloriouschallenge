@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { BlockNumberStatus } from './BlockNumberStatus';
 
-const TEST_ADDRESS = '5F4bqAuskqbRULcnD72songmAj9Rk2iWuE6QDeWTfiU3caR9';
 const TEST_PAYLOAD = { block_number: 123 };
 
 jest.mock('@glorious-challenge/websockets', () => {
@@ -14,7 +13,7 @@ jest.mock('@glorious-challenge/websockets', () => {
           case 'connect':
           case 'disconnect':
             return handler();
-          case 'wallet:update':
+          case 'chain:update':
           default:
             return handler(TEST_PAYLOAD);
         }
@@ -24,13 +23,17 @@ jest.mock('@glorious-challenge/websockets', () => {
   };
 });
 
+afterAll(() => {
+  jest.clearAllMocks();
+});
+
 describe('Block number status tests', () => {
   test('it renders the component', () => {
     const component = render(<BlockNumberStatus />);
     const blockNumber = component.getByTestId('block_number');
     expect(blockNumber).toBeTruthy();
   });
-  test('it renders a value when an adress has passed', async () => {
+  test('it renders a value when the websocket updates', async () => {
     const component = render(<BlockNumberStatus />);
     const blockNumber = component.getByTestId('block_number');
     expect(blockNumber.textContent).toEqual(
