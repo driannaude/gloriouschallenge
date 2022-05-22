@@ -24,7 +24,7 @@ export class CennzNetService {
       });
   }
 
-  api() {
+  public api() {
     return this._api;
   }
 }

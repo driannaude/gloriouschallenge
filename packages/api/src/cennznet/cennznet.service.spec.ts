@@ -10,9 +10,23 @@ describe('CennznetService', () => {
     }).compile();
 
     service = module.get<CennzNetService>(CennzNetService);
+    await service.onModuleInit();
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('Initialization check', () => {
+    it('should be defined', () => {
+      expect(service).toBeDefined();
+    });
+    it('should return the CENNZNet Api module after onModuleInit', async () => {
+      const api = service.api();
+      expect(api).toBeDefined();
+    });
+  });
+
+  describe('@cennznet/api connection', () => {
+    it('should connect to the @cennznet/api on boot', async () => {
+      const isConnected = service.api().isConnected;
+      expect(isConnected).toBe(true);
+    });
   });
 });
