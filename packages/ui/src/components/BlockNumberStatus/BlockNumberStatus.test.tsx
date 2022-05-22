@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { NonceStatus } from './NonceStatus';
+import { BlockNumberStatus } from './BlockNumberStatus';
 
 const TEST_ADDRESS = '5F4bqAuskqbRULcnD72songmAj9Rk2iWuE6QDeWTfiU3caR9';
-const TEST_PAYLOAD = { nonce: 123, balance: 123 };
+const TEST_PAYLOAD = { block_number: 123 };
 
 jest.mock('@glorious-challenge/websockets', () => {
   return {
@@ -24,21 +24,17 @@ jest.mock('@glorious-challenge/websockets', () => {
   };
 });
 
-describe('Nonce status tests', () => {
+describe('Block number status tests', () => {
   test('it renders the component', () => {
-    const component = render(<NonceStatus address={TEST_ADDRESS} />);
-    const nonce = component.getByTestId('nonce');
-    expect(nonce).toBeTruthy();
+    const component = render(<BlockNumberStatus />);
+    const blockNumber = component.getByTestId('block_number');
+    expect(blockNumber).toBeTruthy();
   });
   test('it renders a value when an adress has passed', async () => {
-    const component = render(<NonceStatus address={TEST_ADDRESS} />);
-    const nonce = component.getByTestId('nonce');
-    expect(nonce.textContent).toEqual(TEST_PAYLOAD.nonce.toString());
-  });
-
-  test('it does not render a value if address is empty', async () => {
-    const component = render(<NonceStatus />);
-    const nonce = component.getByTestId('nonce');
-    expect(nonce.textContent).toEqual('-');
+    const component = render(<BlockNumberStatus />);
+    const blockNumber = component.getByTestId('block_number');
+    expect(blockNumber.textContent).toEqual(
+      TEST_PAYLOAD.block_number.toString()
+    );
   });
 });

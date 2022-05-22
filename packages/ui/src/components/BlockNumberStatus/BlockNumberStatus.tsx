@@ -10,7 +10,7 @@ const BlockNumberStatusComponent = () => {
 
   return (
     <div className="block-number-status">
-      <h1>{data?.block_number ?? 'Loading...'}</h1>
+      <h1 data-testid="block_number">{data?.block_number ?? 'Loading...'}</h1>
       <h5>
         <FontAwesomeIcon icon={faWaveSquare} />
         Current Block Number
