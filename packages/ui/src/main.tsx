@@ -19,6 +19,10 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/nfts" element={<WithNavbar component={AssetsPage} />} />
+          <Route
+            path="/:address"
+            element={<WithNavbar component={DashboardPage} />}
+          />
           <Route path="/" element={<WithNavbar component={DashboardPage} />} />
         </Routes>
       </BrowserRouter>

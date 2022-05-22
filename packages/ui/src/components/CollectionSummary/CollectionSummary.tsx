@@ -6,15 +6,17 @@ import {
   CardContent,
   Divider,
   Box,
+  Breadcrumbs,
+  useTheme,
+  Button,
 } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useWebSockets } from '../../hooks/useWebSockets';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import {
   INftCollectionSummary,
   INftCollectionSummaryRequest,
 } from '@glorious-challenge/api-interface';
+import { useNavigate } from 'react-router-dom';
 
 interface CollectionSummaryProps {
   id: string | undefined;
@@ -25,6 +27,8 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
 }) => {
   // Hooks
   const { data, emit } = useWebSockets<INftCollectionSummary>('asset:update');
+  const theme = useTheme();
+  const navigate = useNavigate();
   // Lifecycle methods
   useEffect(() => {
     if (!id) return;
@@ -32,7 +36,10 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
   }, [id]);
 
   if (!data) return null;
-  console.log(data);
+
+  const inspectOwner = (owner: string): void => {
+    navigate(`/${owner}`);
+  };
 
   return (
     <>
@@ -54,22 +61,22 @@ export const CollectionSummaryComponent: React.FC<CollectionSummaryProps> = ({
           const key = token.path.join('-');
           const [collectionId, seriesId, serialNumber] = token.path;
           return (
-            <Grid item md={4} sm={6} xs={12} key={token.path.join('-')}>
+            <Grid item md={6} sm={12} xs={12} key={token.path.join('-')}>
               <Card>
                 <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    Series ID: {seriesId}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    Serial Number: {serialNumber}
-                  </Typography>
-                  <Typography variant="body2">
-                    <small>Owner: {token.owner}</small>
-                  </Typography>
+                  <Breadcrumbs aria-label="breadcrumb">
+                    <Typography variant="h5">{collectionId}</Typography>
+                    <Typography variant="h5">{seriesId}</Typography>
+                    <Typography variant="h5" color={theme.palette.primary.main}>
+                      {serialNumber}
+                    </Typography>
+                  </Breadcrumbs>
+                  <Stack direction="column">
+                    <Typography variant="subtitle2">Owned by</Typography>
+                    <Button onClick={() => inspectOwner(token.owner)}>
+                      <small>{token.owner}</small>
+                    </Button>
+                  </Stack>
                 </CardContent>
               </Card>
             </Grid>

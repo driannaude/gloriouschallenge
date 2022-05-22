@@ -4,10 +4,13 @@ import { BlockNumberStatus } from '../../components/BlockNumberStatus';
 import { NonceStatus } from '../../components/NonceStatus';
 import { SearchBox } from '../../components/SearchBox';
 import { Grid, Card, Container } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
 const DashboardPageComponent = () => {
+  // Hooks
+  const params = useParams<{ address: string }>();
   // State
-  const [address, setAddress] = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(params.address ?? null);
 
   // Handlers
   const onUpdateWalletAddress = useCallback(
@@ -23,6 +26,7 @@ const DashboardPageComponent = () => {
         <Grid item xs={12}>
           <SearchBox
             onSubmit={onUpdateWalletAddress}
+            initialValue={address}
             buttonText="Search"
             placeholderText="CENNZNet Address"
           />

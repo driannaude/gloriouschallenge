@@ -13,16 +13,18 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 interface SearchBoxProps {
   placeholderText: string;
   buttonText: string;
+  initialValue?: string | null;
   onSubmit: (address: string) => void;
 }
 
 const SearchBoxComponent: React.FC<SearchBoxProps> = ({
+  initialValue,
   buttonText,
   placeholderText,
   onSubmit,
 }) => {
   // State
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialValue ?? '');
 
   // Hooks
   const theme = useTheme();
