@@ -30,12 +30,12 @@ const NavbarComponent = () => {
 
   return (
     <header className="header">
-      <NavLink to="/" className="logo">
+      <NavLink data-testid="logo" to="/" className="logo">
         <img src={logo} />
         Challenge
       </NavLink>
       <div className="menu">
-        <nav className={openClass}>
+        <nav data-testid="menu" className={openClass}>
           <NavLink to="/" className={getLinkClass} onClick={toggleMenu}>
             <FontAwesomeIcon icon={faChartPie} />
             Dashboard
@@ -46,7 +46,11 @@ const NavbarComponent = () => {
           </NavLink>
           <WallectConnectButton />
         </nav>
-        <button className="hamburger-btn" onClick={toggleMenu}>
+        <button
+          data-testid="hamburger"
+          className="hamburger-btn"
+          onClick={toggleMenu}
+        >
           <FontAwesomeIcon icon={menuIcon} />
         </button>
       </div>

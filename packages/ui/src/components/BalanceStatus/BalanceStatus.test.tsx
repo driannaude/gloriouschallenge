@@ -31,7 +31,7 @@ jest.mock('@glorious-challenge/websockets', () => {
   return websockets;
 });
 
-describe('Block number status tests', () => {
+describe('Balance status tests', () => {
   test('it renders the component', () => {
     const component = render(<BalanceStatus />);
     const blockNumber = component.getByTestId('balance');

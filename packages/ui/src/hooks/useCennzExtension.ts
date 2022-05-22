@@ -16,7 +16,7 @@ export const useCennzExtension = (): UseCennzExtensionHook => {
 
   const extensionSetup = async () => {
     const extensions = await web3Enable('glorious-challenge');
-    if (extensions.length > 0) {
+    if (extensions?.length > 0) {
       setExtensionInstalled(true);
     }
     const extensionAccounts = await web3Accounts();

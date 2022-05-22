@@ -31,6 +31,7 @@ export const WallectConnectButton = () => {
   // Render
   return (
     <button
+      data-testid="wallet-connect-button"
       className="wallet-connect-btn"
       onClick={connectWallet}
       title={buttonTooltip}
