@@ -10,7 +10,7 @@ interface NonceStatusProps {
 }
 
 const NonceStatusComponent: React.FC<NonceStatusProps> = ({ address }) => {
-  const { data, emit } = useWebSockets<{ nonce: number; balance: number }>(
+  const { data } = useWebSockets<{ nonce: number; balance: number }>(
     'wallet:update'
   );
 
@@ -21,7 +21,7 @@ const NonceStatusComponent: React.FC<NonceStatusProps> = ({ address }) => {
 
   return (
     <div className="block-number-status">
-      <h1>{nonce}</h1>
+      <h1 data-testid="nonce">{nonce}</h1>
       <h5>
         <FontAwesomeIcon icon={faHistory} />
         Nonce
