@@ -10,11 +10,12 @@ describe('ChainGateway', () => {
       imports: [CennzNetModule],
       providers: [ChainGateway],
     }).compile();
-
     gateway = module.get<ChainGateway>(ChainGateway);
   });
 
-  it('should be defined', () => {
-    expect(gateway).toBeDefined();
+  describe('Initialization checks', () => {
+    it('should be defined', () => {
+      expect(gateway).toBeDefined();
+    });
   });
 });
